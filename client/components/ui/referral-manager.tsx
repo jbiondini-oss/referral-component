@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { ReferralTracker, ReferralData } from "./referral-tracker";
 import { cn } from "@/lib/utils";
+import { generateDemoReferrals } from "@/lib/demo-data";
 
 interface ReferralManagerProps {
   referrerId: string;
