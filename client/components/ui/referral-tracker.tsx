@@ -13,30 +13,57 @@ interface ReferralTrackerProps {
 }
 
 export const ReferralTracker: React.FC<ReferralTrackerProps> = ({ referral, className }) => {
-  const getProgress = () => {
-    switch (referral.stage) {
-      case 'joined':
-        return 0;
-      case 'first_transfer':
-        return 1;
-      case 'second_transfer':
-        return 2;
-      case 'multiple_transfers':
-        return 2;
-      default:
-        return 0;
+  // Progress is based on transferCount: 0 = joined only, 1-12 = completed transfers
+  const progress = referral.transferCount;
+  const isStageActive = (stage: number) => progress >= stage;
+
+  const getTransferLabel = () => {
+    if (referral.transferCount === 0) {
+      return '1st transfer';
     }
+    const nextTransfer = Math.min(referral.transferCount + 1, 12);
+    if (nextTransfer === 1) return '1st transfer';
+    if (nextTransfer === 2) return '2nd transfer';
+    if (nextTransfer === 3) return '3rd transfer';
+    return `${nextTransfer}th transfer`;
   };
 
-  const progress = getProgress();
-  const isStageActive = (stage: number) => progress >= stage;
-  const isStageCompleted = (stage: number) => progress > stage;
+  // Generate 13 dots: first is "joined", remaining 12 are for transfers
+  const generateDots = () => {
+    const dots = [];
+    for (let i = 0; i <= 12; i++) {
+      const cx = 4 + (i * (327 - 8) / 12); // Distribute 13 dots evenly across width
+      const isActive = i === 0 || i <= progress; // First dot (joined) always active, others based on transfers
 
-  const getThirdStageLabel = () => {
-    if (referral.stage === 'multiple_transfers' && referral.transferCount) {
-      return `${referral.transferCount}th transfer`;
+      dots.push(
+        <circle
+          key={i}
+          cx={cx}
+          cy="4"
+          r="4"
+          fill="#7633FF"
+          fillOpacity={isActive ? "1" : "0.4"}
+        />
+      );
     }
-    return '2nd transfer';
+    return dots;
+  };
+
+  // Generate progress fill rectangles
+  const generateProgressFill = () => {
+    if (progress === 0) return null;
+
+    const progressWidth = (progress / 12) * (327 - 8) + 8; // Fill width based on completed transfers
+
+    return (
+      <rect
+        width={progressWidth}
+        height="8"
+        rx="4"
+        fill="#7633FF"
+        fillOpacity="0.16"
+      />
+    );
   };
 
   return (
