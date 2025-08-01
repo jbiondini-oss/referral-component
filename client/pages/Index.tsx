@@ -4,28 +4,13 @@ import {
   ReferralState,
 } from "@/components/ui/referral-tracker";
 
-const referralStates: ReferralState[] = [
-  {
-    name: "Mark A. referral",
-    amount: 0 * 3, // 0 transfers = 0 USD
-    transferCount: 0,
-  },
-  {
-    name: "Mark A. referral",
-    amount: 1 * 3, // 1 transfer = 3 USD
-    transferCount: 1,
-  },
-  {
-    name: "Mark A. referral",
-    amount: 2 * 3, // 2 transfers = 6 USD
-    transferCount: 2,
-  },
-  {
-    name: "Mark A. referral",
-    amount: 12 * 3, // 12 transfers = 36 USD
-    transferCount: 12,
-  },
-];
+// Generate all 13 states (joined + 12 transfers)
+const referralStates: ReferralState[] = Array.from({ length: 13 }, (_, i) => ({
+  userId: "user_mark_001", // Database ID for linking
+  name: "Mark A.", // Removed "referral", just name + initial
+  amount: i * 3, // Each transfer = 3 USD
+  transferCount: i, // 0 = joined, 1-12 = completed transfers
+}));
 
 export default function Index() {
   return (
