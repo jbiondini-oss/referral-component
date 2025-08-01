@@ -189,17 +189,7 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
                 className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="mb-3">
-                  <div className="flex justify-between items-start mb-1">
-                    <span className="text-sm font-medium text-gray-600">
-                      Referral #{referral.id.slice(-6)}
-                    </span>
-                    <span className="text-xs text-gray-400">
-                      {new Date(referral.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    Code: {referral.promoCode}
-                  </div>
+                  {/* Simplified card header - removed ID, date, and promo code */}
                 </div>
                 <ReferralTracker
                   referralData={referral}
