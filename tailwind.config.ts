@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        gerbera: ['Gerbera', '-apple-system', 'Roboto', 'Helvetica', 'sans-serif'],
+        gerbera: ['Inter', '-apple-system', 'Roboto', 'Helvetica', 'sans-serif'],
       },
       colors: {
         purple: {
