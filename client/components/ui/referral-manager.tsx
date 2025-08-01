@@ -232,12 +232,7 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
                     className="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm"
                   >
                     <div className="mb-3">
-                      <div className="text-xs text-green-600 font-medium mb-1">
-                        ✓ Completed
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        Finished: {new Date(referral.updatedAt).toLocaleDateString()}
-                      </div>
+                      {/* Simplified completed referral header */}
                     </div>
                     <ReferralTracker referralData={referral} />
                   </div>
