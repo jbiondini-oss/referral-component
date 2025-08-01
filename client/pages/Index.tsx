@@ -1,62 +1,103 @@
-import { DemoResponse } from "@shared/api";
-import { useEffect, useState } from "react";
+import React from 'react';
+import { ReferralTracker, ReferralState } from '@/components/ui/referral-tracker';
+
+const referralStates: ReferralState[] = [
+  {
+    name: 'Mark A. referral',
+    amount: 0,
+    stage: 'joined'
+  },
+  {
+    name: 'Mark A. referral',
+    amount: 0,
+    stage: 'first_transfer'
+  },
+  {
+    name: 'Mark A. referral',
+    amount: 3,
+    stage: 'second_transfer'
+  },
+  {
+    name: 'Mark A. referral',
+    amount: 36,
+    stage: 'multiple_transfers',
+    transferCount: 13
+  }
+];
 
 export default function Index() {
-  const [exampleFromServer, setExampleFromServer] = useState("");
-  // Fetch users on component mount
-  useEffect(() => {
-    fetchDemo();
-  }, []);
-
-  // Example of how to fetch data from the server (if needed)
-  const fetchDemo = async () => {
-    try {
-      const response = await fetch("/api/demo");
-      const data = (await response.json()) as DemoResponse;
-      setExampleFromServer(data.message);
-    } catch (error) {
-      console.error("Error fetching hello:", error);
-    }
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: FUSION_GENERATION_APP_PLACEHOLDER replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
-          >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-            />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
-        <p className="mt-4 text-slate-600 max-w-md">
-          Watch the chat on the left for updates that might need your attention
-          to finish generating
-        </p>
-        <p className="mt-4 hidden max-w-md">{exampleFromServer}</p>
+    <div className="min-h-screen bg-white px-4 py-8 md:px-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-dark mb-4">
+            Referral Tracking System
+          </h1>
+          <p className="text-lg text-gray-medium">
+            Track your referrals' progress through different milestones
+          </p>
+        </div>
+
+        <div className="space-y-8">
+          <div className="grid gap-8 md:grid-cols-2">
+            {referralStates.map((referral, index) => (
+              <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold text-gray-dark mb-2">
+                    State {index + 1}: {getStateDescription(referral.stage, referral.transferCount)}
+                  </h3>
+                </div>
+                <ReferralTracker referral={referral} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-16 text-center">
+          <div className="bg-gray-50 rounded-lg p-8">
+            <h2 className="text-2xl font-bold text-gray-dark mb-4">
+              How It Works
+            </h2>
+            <div className="grid gap-6 md:grid-cols-4 text-sm">
+              <div className="text-center">
+                <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2"></div>
+                <h4 className="font-semibold text-gray-dark mb-1">Joined</h4>
+                <p className="text-gray-medium">Referral signs up</p>
+              </div>
+              <div className="text-center">
+                <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2"></div>
+                <h4 className="font-semibold text-gray-dark mb-1">1st Transfer</h4>
+                <p className="text-gray-medium">First money transfer completed</p>
+              </div>
+              <div className="text-center">
+                <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2"></div>
+                <h4 className="font-semibold text-gray-dark mb-1">2nd Transfer</h4>
+                <p className="text-gray-medium">Second transfer milestone reached</p>
+              </div>
+              <div className="text-center">
+                <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2"></div>
+                <h4 className="font-semibold text-gray-dark mb-1">Multiple Transfers</h4>
+                <p className="text-gray-medium">3rd+ transfers continue earning</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
+}
+
+function getStateDescription(stage: ReferralState['stage'], transferCount?: number): string {
+  switch (stage) {
+    case 'joined':
+      return 'Referral has joined';
+    case 'first_transfer':
+      return 'Referral has sent their first money transfer';
+    case 'second_transfer':
+      return 'Referral has sent their 2nd money transfer';
+    case 'multiple_transfers':
+      return `Referral has sent their ${transferCount}th money transfer`;
+    default:
+      return 'Unknown state';
+  }
 }
