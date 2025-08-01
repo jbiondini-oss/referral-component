@@ -54,38 +54,38 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({ referral, clas
 
       {/* Progress bar */}
       <div className="w-full h-2 relative">
-        <svg className="w-full h-2" viewBox="0 0 327 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg className="w-full h-2" viewBox="0 0 327 8" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
           {/* Background track */}
           <rect width="327" height="8" rx="4" fill="#9F9DA3" fillOpacity="0.28"/>
-          
+
           {/* Progress fills */}
           {progress >= 1 && (
             <rect width="168" height="8" rx="4" fill="#7633FF" fillOpacity="0.16"/>
           )}
           {progress >= 2 && (
-            <rect width="327" height="8" rx="4" fill="#7633FF" fillOpacity="0.16"/>
+            <rect x="160" width="167" height="8" rx="4" fill="#7633FF" fillOpacity="0.16"/>
           )}
-          
+
           {/* Milestone circles */}
-          <circle 
-            cx="4" 
-            cy="4" 
-            r="4" 
-            fill={isStageActive(0) ? "#7633FF" : "#7633FF"} 
-            fillOpacity={isStageActive(0) ? "1" : "0.4"}
+          <circle
+            cx="4"
+            cy="4"
+            r="4"
+            fill="#7633FF"
+            fillOpacity="1"
           />
-          <circle 
-            cx="164" 
-            cy="4" 
-            r="4" 
-            fill="#7633FF" 
+          <circle
+            cx="164"
+            cy="4"
+            r="4"
+            fill="#7633FF"
             fillOpacity={isStageActive(1) ? "1" : "0.4"}
           />
-          <circle 
-            cx="323" 
-            cy="4" 
-            r="4" 
-            fill="#7633FF" 
+          <circle
+            cx="323"
+            cy="4"
+            r="4"
+            fill="#7633FF"
             fillOpacity={isStageActive(2) ? "1" : "0.4"}
           />
         </svg>
