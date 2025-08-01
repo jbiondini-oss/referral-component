@@ -5,23 +5,22 @@ const referralStates: ReferralState[] = [
   {
     name: 'Mark A. referral',
     amount: 0,
-    stage: 'joined'
+    transferCount: 0 // Just joined
   },
   {
     name: 'Mark A. referral',
     amount: 0,
-    stage: 'first_transfer'
+    transferCount: 1 // Completed 1st transfer
   },
   {
     name: 'Mark A. referral',
     amount: 3,
-    stage: 'second_transfer'
+    transferCount: 2 // Completed 2nd transfer
   },
   {
     name: 'Mark A. referral',
     amount: 36,
-    stage: 'multiple_transfers',
-    transferCount: 13
+    transferCount: 12 // Completed 12th transfer
   }
 ];
 
