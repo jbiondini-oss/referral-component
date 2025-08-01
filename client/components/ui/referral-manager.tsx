@@ -225,21 +225,21 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
                 No completed referrals yet
               </div>
             ) : (
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {completedReferrals.map((referral) => (
                   <div
                     key={referral.id}
-                    className="bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm"
+                    className="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm"
                   >
-                    <div className="font-medium text-gray-dark mb-1">
-                      {referral.referralUser.firstName} {referral.referralUser.lastName.charAt(0)}.
+                    <div className="mb-3">
+                      <div className="text-xs text-green-600 font-medium mb-1">
+                        ✓ Completed
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        Finished: {new Date(referral.updatedAt).toLocaleDateString()}
+                      </div>
                     </div>
-                    <div className="text-green-600 font-semibold">
-                      36 USD earned
-                    </div>
-                    <div className="text-xs text-gray-500">
-                      Completed: {new Date(referral.updatedAt).toLocaleDateString()}
-                    </div>
+                    <ReferralTracker referralData={referral} />
                   </div>
                 ))}
               </div>
