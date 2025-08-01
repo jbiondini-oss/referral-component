@@ -26,7 +26,7 @@ const ReferralDataSchema = z.object({
   promoCode: z.string().min(6).max(20),
   transferCount: z.number().int().min(0).max(12),
   totalEarnings: z.number().min(0),
-  status: z.enum(['active', 'completed', 'archived']),
+  status: z.enum(["active", "completed", "archived"]),
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime(),
   transfers: z.array(TransferRecordSchema),
@@ -54,27 +54,27 @@ class ReferralDatabaseService {
       promoCode: "MARK2024",
       transferCount: 3,
       totalEarnings: 9,
-      status: 'active' as const,
+      status: "active" as const,
       createdAt: "2024-01-15T10:30:00Z",
       updatedAt: "2024-01-20T14:22:00Z",
       transfers: [
         {
           id: "transfer-001",
-          amount: 150.00,
+          amount: 150.0,
           currency: "USD",
           completedAt: "2024-01-16T09:15:00Z",
           referralEarning: 3,
         },
         {
           id: "transfer-002",
-          amount: 200.00,
-          currency: "USD", 
+          amount: 200.0,
+          currency: "USD",
           completedAt: "2024-01-18T11:30:00Z",
           referralEarning: 3,
         },
         {
           id: "transfer-003",
-          amount: 75.00,
+          amount: 75.0,
           currency: "USD",
           completedAt: "2024-01-20T14:22:00Z",
           referralEarning: 3,
@@ -86,28 +86,35 @@ class ReferralDatabaseService {
 
   static async getActiveReferrals(referrerId: string): Promise<ReferralData[]> {
     // Simulate async database call
-    await new Promise(resolve => setTimeout(resolve, 100));
-    
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
     return this.mockData.filter(
-      referral => referral.referrerId === referrerId && 
-      referral.status === 'active' &&
-      referral.transferCount < 12
+      (referral) =>
+        referral.referrerId === referrerId &&
+        referral.status === "active" &&
+        referral.transferCount < 12,
     );
   }
 
-  static async getCompletedReferrals(referrerId: string): Promise<ReferralData[]> {
-    await new Promise(resolve => setTimeout(resolve, 100));
-    
+  static async getCompletedReferrals(
+    referrerId: string,
+  ): Promise<ReferralData[]> {
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
     return this.mockData.filter(
-      referral => referral.referrerId === referrerId && 
-      (referral.status === 'completed' || referral.transferCount >= 12)
+      (referral) =>
+        referral.referrerId === referrerId &&
+        (referral.status === "completed" || referral.transferCount >= 12),
     );
   }
 
-  static async updateReferralStatus(referralId: string, status: 'active' | 'completed' | 'archived'): Promise<boolean> {
-    await new Promise(resolve => setTimeout(resolve, 50));
-    
-    const referral = this.mockData.find(r => r.id === referralId);
+  static async updateReferralStatus(
+    referralId: string,
+    status: "active" | "completed" | "archived",
+  ): Promise<boolean> {
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    const referral = this.mockData.find((r) => r.id === referralId);
     if (referral) {
       referral.status = status;
       referral.updatedAt = new Date().toISOString();
@@ -116,14 +123,16 @@ class ReferralDatabaseService {
     return false;
   }
 
-  static async createReferral(referralData: Omit<ReferralData, 'id' | 'createdAt' | 'updatedAt'>): Promise<ReferralData> {
+  static async createReferral(
+    referralData: Omit<ReferralData, "id" | "createdAt" | "updatedAt">,
+  ): Promise<ReferralData> {
     const newReferral: ReferralData = {
       ...referralData,
       id: crypto.randomUUID(),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-    
+
     this.mockData.push(newReferral);
     return newReferral;
   }
@@ -136,33 +145,34 @@ export const getActiveReferrals: RequestHandler = async (req, res) => {
 
     if (!referrerId) {
       return res.status(400).json({
-        error: 'Referrer ID is required',
-        code: 'MISSING_REFERRER_ID'
+        error: "Referrer ID is required",
+        code: "MISSING_REFERRER_ID",
       });
     }
 
     // Validate UUID format
-    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    const uuidRegex =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     if (!uuidRegex.test(referrerId)) {
       return res.status(400).json({
-        error: 'Invalid referrer ID format',
-        code: 'INVALID_REFERRER_ID'
+        error: "Invalid referrer ID format",
+        code: "INVALID_REFERRER_ID",
       });
     }
 
-    const activeReferrals = await ReferralDatabaseService.getActiveReferrals(referrerId);
-    
+    const activeReferrals =
+      await ReferralDatabaseService.getActiveReferrals(referrerId);
+
     res.json({
       success: true,
       data: activeReferrals,
-      count: activeReferrals.length
+      count: activeReferrals.length,
     });
-
   } catch (error) {
-    console.error('Error fetching active referrals:', error);
+    console.error("Error fetching active referrals:", error);
     res.status(500).json({
-      error: 'Internal server error',
-      code: 'INTERNAL_ERROR'
+      error: "Internal server error",
+      code: "INTERNAL_ERROR",
     });
   }
 };
@@ -173,24 +183,24 @@ export const getCompletedReferrals: RequestHandler = async (req, res) => {
 
     if (!referrerId) {
       return res.status(400).json({
-        error: 'Referrer ID is required',
-        code: 'MISSING_REFERRER_ID'
+        error: "Referrer ID is required",
+        code: "MISSING_REFERRER_ID",
       });
     }
 
-    const completedReferrals = await ReferralDatabaseService.getCompletedReferrals(referrerId);
-    
+    const completedReferrals =
+      await ReferralDatabaseService.getCompletedReferrals(referrerId);
+
     res.json({
       success: true,
       data: completedReferrals,
-      count: completedReferrals.length
+      count: completedReferrals.length,
     });
-
   } catch (error) {
-    console.error('Error fetching completed referrals:', error);
+    console.error("Error fetching completed referrals:", error);
     res.status(500).json({
-      error: 'Internal server error',
-      code: 'INTERNAL_ERROR'
+      error: "Internal server error",
+      code: "INTERNAL_ERROR",
     });
   }
 };
@@ -201,30 +211,32 @@ export const completeReferral: RequestHandler = async (req, res) => {
 
     if (!referralId) {
       return res.status(400).json({
-        error: 'Referral ID is required',
-        code: 'MISSING_REFERRAL_ID'
+        error: "Referral ID is required",
+        code: "MISSING_REFERRAL_ID",
       });
     }
 
-    const success = await ReferralDatabaseService.updateReferralStatus(referralId, 'completed');
-    
+    const success = await ReferralDatabaseService.updateReferralStatus(
+      referralId,
+      "completed",
+    );
+
     if (!success) {
       return res.status(404).json({
-        error: 'Referral not found',
-        code: 'REFERRAL_NOT_FOUND'
+        error: "Referral not found",
+        code: "REFERRAL_NOT_FOUND",
       });
     }
 
     res.json({
       success: true,
-      message: 'Referral marked as completed'
+      message: "Referral marked as completed",
     });
-
   } catch (error) {
-    console.error('Error completing referral:', error);
+    console.error("Error completing referral:", error);
     res.status(500).json({
-      error: 'Internal server error',
-      code: 'INTERNAL_ERROR'
+      error: "Internal server error",
+      code: "INTERNAL_ERROR",
     });
   }
 };
@@ -233,11 +245,11 @@ export const completeReferral: RequestHandler = async (req, res) => {
 export const handleTransferWebhook: RequestHandler = async (req, res) => {
   try {
     // Validate webhook signature (implement based on Paysend's webhook security)
-    const signature = req.headers['x-paysend-signature'] as string;
+    const signature = req.headers["x-paysend-signature"] as string;
     if (!signature) {
       return res.status(401).json({
-        error: 'Missing webhook signature',
-        code: 'MISSING_SIGNATURE'
+        error: "Missing webhook signature",
+        code: "MISSING_SIGNATURE",
       });
     }
 
@@ -246,17 +258,16 @@ export const handleTransferWebhook: RequestHandler = async (req, res) => {
 
     // Find referral by user ID and update transfer count
     // This would integrate with Paysend's user and transfer systems
-    
+
     res.json({
       success: true,
-      message: 'Webhook processed successfully'
+      message: "Webhook processed successfully",
     });
-
   } catch (error) {
-    console.error('Error processing transfer webhook:', error);
+    console.error("Error processing transfer webhook:", error);
     res.status(500).json({
-      error: 'Webhook processing failed',
-      code: 'WEBHOOK_ERROR'
+      error: "Webhook processing failed",
+      code: "WEBHOOK_ERROR",
     });
   }
 };

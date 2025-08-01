@@ -2,11 +2,11 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
-import { 
-  getActiveReferrals, 
-  getCompletedReferrals, 
+import {
+  getActiveReferrals,
+  getCompletedReferrals,
   completeReferral,
-  handleTransferWebhook 
+  handleTransferWebhook,
 } from "./routes/referrals";
 
 export function createServer() {

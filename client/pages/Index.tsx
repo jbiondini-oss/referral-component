@@ -30,7 +30,9 @@ export default function Index() {
                 <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">
                   1
                 </div>
-                <h4 className="font-semibold text-gray-dark mb-1">Share Code</h4>
+                <h4 className="font-semibold text-gray-dark mb-1">
+                  Share Code
+                </h4>
                 <p className="text-gray-medium">
                   Share your unique promo code with friends
                 </p>
@@ -39,7 +41,9 @@ export default function Index() {
                 <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">
                   2
                 </div>
-                <h4 className="font-semibold text-gray-dark mb-1">Friend Joins</h4>
+                <h4 className="font-semibold text-gray-dark mb-1">
+                  Friend Joins
+                </h4>
                 <p className="text-gray-medium">
                   They register using your code
                 </p>

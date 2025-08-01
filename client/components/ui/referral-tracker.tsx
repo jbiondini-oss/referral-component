@@ -18,7 +18,7 @@ export interface ReferralData {
   promoCode: string;
   transferCount: number; // 0-12
   totalEarnings: number;
-  status: 'active' | 'completed' | 'archived';
+  status: "active" | "completed" | "archived";
   createdAt: string;
   updatedAt: string;
   transfers: TransferRecord[];
@@ -85,7 +85,7 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({
           fillOpacity={isActive ? "1" : "0.4"}
           className={cn(
             "transition-all duration-300 ease-in-out",
-            isUpdating && "animate-pulse"
+            isUpdating && "animate-pulse",
           )}
         />,
       );
@@ -108,7 +108,7 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({
         fillOpacity="0.16"
         className={cn(
           "transition-all duration-500 ease-in-out",
-          isUpdating && "animate-pulse"
+          isUpdating && "animate-pulse",
         )}
       />
     );
@@ -119,7 +119,7 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({
       className={cn(
         "inline-flex flex-col items-start gap-5 w-full max-w-[327px]",
         "transition-all duration-300",
-        referralData.status === 'completed' && "opacity-75",
+        referralData.status === "completed" && "opacity-75",
         className,
       )}
       data-referral-id={referralData.id}
@@ -127,12 +127,14 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({
     >
       {/* Header with name and earnings */}
       <div className="w-full h-6 relative">
-        <div 
+        <div
           className="w-full text-gray-dark font-gerbera text-[17px] font-normal leading-6 absolute left-0 top-0 h-6 cursor-pointer hover:text-purple-primary transition-colors"
           title={`${referralData.referralUser.firstName} ${referralData.referralUser.lastName} - ID: ${referralData.referralUser.id}`}
           onClick={() => {
             // Could trigger user profile modal or navigation
-            console.log(`Navigate to user profile: ${referralData.referralUser.id}`);
+            console.log(
+              `Navigate to user profile: ${referralData.referralUser.id}`,
+            );
           }}
         >
           {displayName}
@@ -186,7 +188,9 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({
         <div
           className={cn(
             "text-right font-gerbera text-sm font-normal leading-5 absolute right-0 top-0 h-5 whitespace-nowrap",
-            referralData.transferCount > 0 ? "text-gray-dark" : "text-gray-medium",
+            referralData.transferCount > 0
+              ? "text-gray-dark"
+              : "text-gray-medium",
           )}
         >
           {getTransferLabel()}

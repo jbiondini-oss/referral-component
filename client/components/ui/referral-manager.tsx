@@ -10,44 +10,46 @@ interface ReferralManagerProps {
 
 // API service functions (would be in separate service file in production)
 class ReferralService {
-  private static readonly BASE_URL = '/api/referrals';
+  private static readonly BASE_URL = "/api/referrals";
 
   static async getActiveReferrals(referrerId: string): Promise<ReferralData[]> {
     try {
       const response = await fetch(`${this.BASE_URL}/active/${referrerId}`, {
         headers: {
-          'Authorization': `Bearer ${this.getAuthToken()}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.getAuthToken()}`,
+          "Content-Type": "application/json",
         },
       });
-      
+
       if (!response.ok) {
-        throw new Error('Failed to fetch active referrals');
+        throw new Error("Failed to fetch active referrals");
       }
-      
+
       return await response.json();
     } catch (error) {
-      console.error('Error fetching active referrals:', error);
+      console.error("Error fetching active referrals:", error);
       return [];
     }
   }
 
-  static async getCompletedReferrals(referrerId: string): Promise<ReferralData[]> {
+  static async getCompletedReferrals(
+    referrerId: string,
+  ): Promise<ReferralData[]> {
     try {
       const response = await fetch(`${this.BASE_URL}/completed/${referrerId}`, {
         headers: {
-          'Authorization': `Bearer ${this.getAuthToken()}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.getAuthToken()}`,
+          "Content-Type": "application/json",
         },
       });
-      
+
       if (!response.ok) {
-        throw new Error('Failed to fetch completed referrals');
+        throw new Error("Failed to fetch completed referrals");
       }
-      
+
       return await response.json();
     } catch (error) {
-      console.error('Error fetching completed referrals:', error);
+      console.error("Error fetching completed referrals:", error);
       return [];
     }
   }
@@ -55,23 +57,23 @@ class ReferralService {
   static async moveToCompleted(referralId: string): Promise<boolean> {
     try {
       const response = await fetch(`${this.BASE_URL}/${referralId}/complete`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Authorization': `Bearer ${this.getAuthToken()}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.getAuthToken()}`,
+          "Content-Type": "application/json",
         },
       });
-      
+
       return response.ok;
     } catch (error) {
-      console.error('Error moving referral to completed:', error);
+      console.error("Error moving referral to completed:", error);
       return false;
     }
   }
 
   private static getAuthToken(): string {
     // In production, this would get token from secure storage
-    return localStorage.getItem('authToken') || '';
+    return localStorage.getItem("authToken") || "";
   }
 }
 
@@ -80,7 +82,9 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
   className,
 }) => {
   const [activeReferrals, setActiveReferrals] = useState<ReferralData[]>([]);
-  const [completedReferrals, setCompletedReferrals] = useState<ReferralData[]>([]);
+  const [completedReferrals, setCompletedReferrals] = useState<ReferralData[]>(
+    [],
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [showCompleted, setShowCompleted] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -94,43 +98,53 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
       // For demo purposes, use generated data
       // In production, this would call the actual API
       const demoData = generateDemoReferrals();
-      const active = demoData.filter(r => r.transferCount < 12);
-      const completed = demoData.filter(r => r.transferCount >= 12);
+      const active = demoData.filter((r) => r.transferCount < 12);
+      const completed = demoData.filter((r) => r.transferCount >= 12);
 
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       setActiveReferrals(active);
       setCompletedReferrals(completed);
     } catch (err) {
-      setError('Failed to load referrals. Please try again.');
-      console.error('Error loading referrals:', err);
+      setError("Failed to load referrals. Please try again.");
+      console.error("Error loading referrals:", err);
     } finally {
       setIsLoading(false);
     }
   }, [referrerId]);
 
   // Handle referral completion (12 transfers reached)
-  const handleReferralComplete = useCallback(async (referralData: ReferralData) => {
-    const success = await ReferralService.moveToCompleted(referralData.id);
-    
-    if (success) {
-      // Move from active to completed
-      setActiveReferrals(prev => prev.filter(r => r.id !== referralData.id));
-      setCompletedReferrals(prev => [...prev, { ...referralData, status: 'completed' }]);
-      
-      // Show success notification (in production, use toast/notification system)
-      console.log(`Referral ${referralData.referralUser.firstName} completed all transfers!`);
-    }
-  }, []);
+  const handleReferralComplete = useCallback(
+    async (referralData: ReferralData) => {
+      const success = await ReferralService.moveToCompleted(referralData.id);
+
+      if (success) {
+        // Move from active to completed
+        setActiveReferrals((prev) =>
+          prev.filter((r) => r.id !== referralData.id),
+        );
+        setCompletedReferrals((prev) => [
+          ...prev,
+          { ...referralData, status: "completed" },
+        ]);
+
+        // Show success notification (in production, use toast/notification system)
+        console.log(
+          `Referral ${referralData.referralUser.firstName} completed all transfers!`,
+        );
+      }
+    },
+    [],
+  );
 
   // Load data on mount and set up polling for real-time updates
   useEffect(() => {
     loadReferrals();
-    
+
     // Poll for updates every 30 seconds (in production, use WebSocket or Server-Sent Events)
     const pollInterval = setInterval(loadReferrals, 30000);
-    
+
     return () => clearInterval(pollInterval);
   }, [loadReferrals]);
 
@@ -187,7 +201,7 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
               <div
                 key={referral.id}
                 className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow h-fit"
-                style={{ padding: '16px' }}
+                style={{ padding: "16px" }}
               >
                 <ReferralTracker
                   referralData={referral}
@@ -208,10 +222,12 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
           <h3 className="text-lg font-semibold text-gray-dark">
             All Referrals
           </h3>
-          <span className={cn(
-            "transition-transform duration-200",
-            showCompleted ? "rotate-180" : ""
-          )}>
+          <span
+            className={cn(
+              "transition-transform duration-200",
+              showCompleted ? "rotate-180" : "",
+            )}
+          >
             ▼
           </span>
         </button>
@@ -228,7 +244,7 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
                   <div
                     key={referral.id}
                     className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow h-fit"
-                    style={{ padding: '16px' }}
+                    style={{ padding: "16px" }}
                   >
                     <ReferralTracker referralData={referral} />
                   </div>
