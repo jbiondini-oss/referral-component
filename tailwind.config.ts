@@ -14,16 +14,22 @@ export default {
     },
     extend: {
       fontFamily: {
-        gerbera: ['Inter', '-apple-system', 'Roboto', 'Helvetica', 'sans-serif'],
+        gerbera: [
+          "Inter",
+          "-apple-system",
+          "Roboto",
+          "Helvetica",
+          "sans-serif",
+        ],
       },
       colors: {
         purple: {
-          primary: '#7633FF',
+          primary: "#7633FF",
         },
         gray: {
-          dark: '#141414',
-          medium: '#77767A',
-          light: '#9F9DA3',
+          dark: "#141414",
+          medium: "#77767A",
+          light: "#9F9DA3",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -1,27 +1,30 @@
-import React from 'react';
-import { ReferralTracker, ReferralState } from '@/components/ui/referral-tracker';
+import React from "react";
+import {
+  ReferralTracker,
+  ReferralState,
+} from "@/components/ui/referral-tracker";
 
 const referralStates: ReferralState[] = [
   {
-    name: 'Mark A. referral',
+    name: "Mark A. referral",
     amount: 0 * 3, // 0 transfers = 0 USD
-    transferCount: 0
+    transferCount: 0,
   },
   {
-    name: 'Mark A. referral',
+    name: "Mark A. referral",
     amount: 1 * 3, // 1 transfer = 3 USD
-    transferCount: 1
+    transferCount: 1,
   },
   {
-    name: 'Mark A. referral',
+    name: "Mark A. referral",
     amount: 2 * 3, // 2 transfers = 6 USD
-    transferCount: 2
+    transferCount: 2,
   },
   {
-    name: 'Mark A. referral',
+    name: "Mark A. referral",
     amount: 12 * 3, // 12 transfers = 36 USD
-    transferCount: 12
-  }
+    transferCount: 12,
+  },
 ];
 
 export default function Index() {
@@ -40,10 +43,14 @@ export default function Index() {
         <div className="space-y-8">
           <div className="grid gap-8 md:grid-cols-2">
             {referralStates.map((referral, index) => (
-              <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+              <div
+                key={index}
+                className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm"
+              >
                 <div className="mb-4">
                   <h3 className="text-lg font-semibold text-gray-dark mb-2">
-                    State {index + 1}: {getStateDescription(referral.transferCount)}
+                    State {index + 1}:{" "}
+                    {getStateDescription(referral.transferCount)}
                   </h3>
                 </div>
                 <ReferralTracker referral={referral} />
@@ -65,18 +72,30 @@ export default function Index() {
               </div>
               <div className="text-center">
                 <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2"></div>
-                <h4 className="font-semibold text-gray-dark mb-1">1st Transfer</h4>
-                <p className="text-gray-medium">First money transfer completed</p>
+                <h4 className="font-semibold text-gray-dark mb-1">
+                  1st Transfer
+                </h4>
+                <p className="text-gray-medium">
+                  First money transfer completed
+                </p>
               </div>
               <div className="text-center">
                 <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2"></div>
-                <h4 className="font-semibold text-gray-dark mb-1">2nd Transfer</h4>
-                <p className="text-gray-medium">Second transfer milestone reached</p>
+                <h4 className="font-semibold text-gray-dark mb-1">
+                  2nd Transfer
+                </h4>
+                <p className="text-gray-medium">
+                  Second transfer milestone reached
+                </p>
               </div>
               <div className="text-center">
                 <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2"></div>
-                <h4 className="font-semibold text-gray-dark mb-1">Multiple Transfers</h4>
-                <p className="text-gray-medium">3rd+ transfers continue earning</p>
+                <h4 className="font-semibold text-gray-dark mb-1">
+                  Multiple Transfers
+                </h4>
+                <p className="text-gray-medium">
+                  3rd+ transfers continue earning
+                </p>
               </div>
             </div>
           </div>
@@ -88,13 +107,13 @@ export default function Index() {
 
 function getStateDescription(transferCount: number): string {
   if (transferCount === 0) {
-    return 'Referral has joined';
+    return "Referral has joined";
   } else if (transferCount === 1) {
-    return 'Referral has sent their 1st money transfer';
+    return "Referral has sent their 1st money transfer";
   } else if (transferCount === 2) {
-    return 'Referral has sent their 2nd money transfer';
+    return "Referral has sent their 2nd money transfer";
   } else if (transferCount === 3) {
-    return 'Referral has sent their 3rd money transfer';
+    return "Referral has sent their 3rd money transfer";
   } else {
     return `Referral has sent their ${transferCount}th money transfer`;
   }

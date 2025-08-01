@@ -1,5 +1,5 @@
-import React from 'react';
-import { cn } from '@/lib/utils';
+import React from "react";
+import { cn } from "@/lib/utils";
 
 export interface ReferralState {
   name: string;
@@ -12,19 +12,22 @@ interface ReferralTrackerProps {
   className?: string;
 }
 
-export const ReferralTracker: React.FC<ReferralTrackerProps> = ({ referral, className }) => {
+export const ReferralTracker: React.FC<ReferralTrackerProps> = ({
+  referral,
+  className,
+}) => {
   // Progress logic: 1st dot = joined, 2nd dot = 1st transfer, etc.
   // So active dots = transferCount + 1 (joined + completed transfers)
   const activeDots = referral.transferCount + 1;
 
   const getTransferLabel = () => {
     if (referral.transferCount === 12) {
-      return '12th transfer';
+      return "12th transfer";
     }
     const nextTransfer = referral.transferCount + 1;
-    if (nextTransfer === 1) return '1st transfer';
-    if (nextTransfer === 2) return '2nd transfer';
-    if (nextTransfer === 3) return '3rd transfer';
+    if (nextTransfer === 1) return "1st transfer";
+    if (nextTransfer === 2) return "2nd transfer";
+    if (nextTransfer === 3) return "3rd transfer";
     return `${nextTransfer}th transfer`;
   };
 
@@ -32,7 +35,7 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({ referral, clas
   const generateDots = () => {
     const dots = [];
     for (let i = 0; i <= 12; i++) {
-      const cx = 4 + (i * (327 - 8) / 12); // Distribute 13 dots evenly across width
+      const cx = 4 + (i * (327 - 8)) / 12; // Distribute 13 dots evenly across width
       const isActive = i < activeDots; // Active if within completed milestones
 
       dots.push(
@@ -43,7 +46,7 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({ referral, clas
           r="4"
           fill="#7633FF"
           fillOpacity={isActive ? "1" : "0.4"}
-        />
+        />,
       );
     }
     return dots;
@@ -67,7 +70,12 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({ referral, clas
   };
 
   return (
-    <div className={cn("inline-flex flex-col items-start gap-5 w-full max-w-[327px]", className)}>
+    <div
+      className={cn(
+        "inline-flex flex-col items-start gap-5 w-full max-w-[327px]",
+        className,
+      )}
+    >
       {/* Header with name and amount */}
       <div className="w-full h-6 relative">
         <div className="w-full text-gray-dark font-gerbera text-[17px] font-normal leading-6 absolute left-0 top-0 h-6">
@@ -80,9 +88,21 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({ referral, clas
 
       {/* Progress bar */}
       <div className="w-full h-2 relative">
-        <svg className="w-full h-2" viewBox="0 0 327 8" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <svg
+          className="w-full h-2"
+          viewBox="0 0 327 8"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+        >
           {/* Background track */}
-          <rect width="327" height="8" rx="4" fill="#9F9DA3" fillOpacity="0.28"/>
+          <rect
+            width="327"
+            height="8"
+            rx="4"
+            fill="#9F9DA3"
+            fillOpacity="0.28"
+          />
 
           {/* Progress fill */}
           {generateProgressFill()}
@@ -94,16 +114,20 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({ referral, clas
 
       {/* Labels */}
       <div className="w-full h-5 relative">
-        <div className={cn(
-          "font-gerbera text-sm font-normal leading-5 absolute left-0 top-0 w-[43px] h-5",
-          "text-gray-dark" // Joined is always active
-        )}>
+        <div
+          className={cn(
+            "font-gerbera text-sm font-normal leading-5 absolute left-0 top-0 w-[43px] h-5",
+            "text-gray-dark", // Joined is always active
+          )}
+        >
           Joined
         </div>
-        <div className={cn(
-          "text-right font-gerbera text-sm font-normal leading-5 absolute right-0 top-0 h-5 whitespace-nowrap",
-          referral.transferCount > 0 ? "text-gray-dark" : "text-gray-medium"
-        )}>
+        <div
+          className={cn(
+            "text-right font-gerbera text-sm font-normal leading-5 absolute right-0 top-0 h-5 whitespace-nowrap",
+            referral.transferCount > 0 ? "text-gray-dark" : "text-gray-medium",
+          )}
+        >
           {getTransferLabel()}
         </div>
       </div>
