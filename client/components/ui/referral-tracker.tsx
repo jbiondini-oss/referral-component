@@ -84,36 +84,11 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({ referral, clas
           {/* Background track */}
           <rect width="327" height="8" rx="4" fill="#9F9DA3" fillOpacity="0.28"/>
 
-          {/* Progress fills */}
-          {progress >= 1 && (
-            <rect width="168" height="8" rx="4" fill="#7633FF" fillOpacity="0.16"/>
-          )}
-          {progress >= 2 && (
-            <rect x="160" width="167" height="8" rx="4" fill="#7633FF" fillOpacity="0.16"/>
-          )}
+          {/* Progress fill */}
+          {generateProgressFill()}
 
-          {/* Milestone circles */}
-          <circle
-            cx="4"
-            cy="4"
-            r="4"
-            fill="#7633FF"
-            fillOpacity="1"
-          />
-          <circle
-            cx="164"
-            cy="4"
-            r="4"
-            fill="#7633FF"
-            fillOpacity={isStageActive(1) ? "1" : "0.4"}
-          />
-          <circle
-            cx="323"
-            cy="4"
-            r="4"
-            fill="#7633FF"
-            fillOpacity={isStageActive(2) ? "1" : "0.4"}
-          />
+          {/* 13 Milestone dots */}
+          {generateDots()}
         </svg>
       </div>
 
@@ -121,21 +96,15 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({ referral, clas
       <div className="w-full h-10 relative">
         <div className={cn(
           "font-gerbera text-sm font-normal leading-5 absolute left-0 top-0 w-[43px] h-5",
-          isStageActive(0) ? "text-gray-dark" : "text-gray-medium"
+          "text-gray-dark" // Joined is always active
         )}>
           Joined
         </div>
         <div className={cn(
-          "text-center font-gerbera text-sm font-normal leading-5 absolute left-[127px] top-0 w-[75px] h-5",
-          isStageActive(1) ? "text-gray-dark" : "text-gray-medium"
-        )}>
-          1st transfer
-        </div>
-        <div className={cn(
           "w-[76px] text-right font-gerbera text-sm font-normal leading-5 absolute right-0 top-0 h-10",
-          isStageActive(2) ? "text-gray-dark" : "text-gray-medium"
+          progress > 0 ? "text-gray-dark" : "text-gray-medium"
         )}>
-          {getThirdStageLabel()}
+          {getTransferLabel()}
         </div>
       </div>
     </div>
