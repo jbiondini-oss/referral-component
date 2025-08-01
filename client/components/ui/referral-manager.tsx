@@ -208,7 +208,7 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
           className="flex items-center justify-between w-full p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
         >
           <h3 className="text-lg font-semibold text-gray-dark">
-            All Referrals ({completedReferrals.length} completed)
+            All Referrals
           </h3>
           <span className={cn(
             "transition-transform duration-200",
