@@ -4,8 +4,7 @@ import { cn } from '@/lib/utils';
 export interface ReferralState {
   name: string;
   amount: number;
-  stage: 'joined' | 'first_transfer' | 'second_transfer' | 'multiple_transfers';
-  transferCount?: number;
+  transferCount: number; // 0 = joined only, 1-12 = number of transfers completed
 }
 
 interface ReferralTrackerProps {
