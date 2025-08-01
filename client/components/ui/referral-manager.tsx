@@ -163,7 +163,7 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
       <div>
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-dark">
-            Active Referrals ({activeReferrals.length})
+            Active Referrals
           </h2>
           <button
             onClick={loadReferrals}
