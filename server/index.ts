@@ -2,6 +2,12 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
+import { 
+  getActiveReferrals, 
+  getCompletedReferrals, 
+  completeReferral,
+  handleTransferWebhook 
+} from "./routes/referrals";
 
 export function createServer() {
   const app = express();
@@ -18,6 +24,12 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
+
+  // Referral system routes
+  app.get("/api/referrals/active/:referrerId", getActiveReferrals);
+  app.get("/api/referrals/completed/:referrerId", getCompletedReferrals);
+  app.put("/api/referrals/:referralId/complete", completeReferral);
+  app.post("/api/webhooks/transfer-completed", handleTransferWebhook);
 
   return app;
 }
