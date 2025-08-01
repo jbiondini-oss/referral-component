@@ -186,9 +186,9 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
             {activeReferrals.map((referral) => (
               <div
                 key={referral.id}
-                className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
+                className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow h-fit"
               >
-                <div className="mb-3">
+                <div className="mb-4">
                   {/* Simplified card header - removed ID, date, and promo code */}
                 </div>
                 <ReferralTracker
