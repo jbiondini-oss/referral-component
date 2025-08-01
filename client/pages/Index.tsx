@@ -4,23 +4,23 @@ import { ReferralTracker, ReferralState } from '@/components/ui/referral-tracker
 const referralStates: ReferralState[] = [
   {
     name: 'Mark A. referral',
-    amount: 0,
-    transferCount: 0 // Just joined
+    amount: 0 * 3, // 0 transfers = 0 USD
+    transferCount: 0
   },
   {
     name: 'Mark A. referral',
-    amount: 0,
-    transferCount: 1 // Completed 1st transfer
+    amount: 1 * 3, // 1 transfer = 3 USD
+    transferCount: 1
   },
   {
     name: 'Mark A. referral',
-    amount: 3,
-    transferCount: 2 // Completed 2nd transfer
+    amount: 2 * 3, // 2 transfers = 6 USD
+    transferCount: 2
   },
   {
     name: 'Mark A. referral',
-    amount: 36,
-    transferCount: 12 // Completed 12th transfer
+    amount: 12 * 3, // 12 transfers = 36 USD
+    transferCount: 12
   }
 ];
 
