@@ -13,27 +13,27 @@ interface ReferralTrackerProps {
 }
 
 export const ReferralTracker: React.FC<ReferralTrackerProps> = ({ referral, className }) => {
-  // Progress is based on transferCount: 0 = joined only, 1-12 = completed transfers
-  const progress = referral.transferCount;
-  const isStageActive = (stage: number) => progress >= stage;
+  // Progress logic: 1st dot = joined, 2nd dot = 1st transfer, etc.
+  // So active dots = transferCount + 1 (joined + completed transfers)
+  const activeDots = referral.transferCount + 1;
 
   const getTransferLabel = () => {
-    if (referral.transferCount === 0) {
-      return '1st transfer';
+    if (referral.transferCount === 12) {
+      return '12th transfer';
     }
-    const nextTransfer = Math.min(referral.transferCount + 1, 12);
+    const nextTransfer = referral.transferCount + 1;
     if (nextTransfer === 1) return '1st transfer';
     if (nextTransfer === 2) return '2nd transfer';
     if (nextTransfer === 3) return '3rd transfer';
     return `${nextTransfer}th transfer`;
   };
 
-  // Generate 13 dots: first is "joined", remaining 12 are for transfers
+  // Generate 13 dots: 1st = joined, 2nd = 1st transfer, ..., 13th = 12th transfer
   const generateDots = () => {
     const dots = [];
     for (let i = 0; i <= 12; i++) {
       const cx = 4 + (i * (327 - 8) / 12); // Distribute 13 dots evenly across width
-      const isActive = i === 0 || i <= progress; // First dot (joined) always active, others based on transfers
+      const isActive = i < activeDots; // Active if within completed milestones
 
       dots.push(
         <circle
@@ -51,9 +51,9 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({ referral, clas
 
   // Generate progress fill rectangles
   const generateProgressFill = () => {
-    if (progress === 0) return null;
+    if (referral.transferCount === 0) return null;
 
-    const progressWidth = (progress / 12) * (327 - 8) + 8; // Fill width based on completed transfers
+    const progressWidth = (referral.transferCount / 12) * (327 - 8) + 8; // Fill width based on completed transfers
 
     return (
       <rect
