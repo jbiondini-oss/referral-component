@@ -193,14 +193,7 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({
         </div>
       </div>
 
-      {/* Completion indicator */}
-      {referralData.transferCount >= 12 && (
-        <div className="w-full text-center">
-          <span className="inline-flex items-center px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
-            ✓ Completed
-          </span>
-        </div>
-      )}
+      {/* Completion indicator removed per user request */}
     </div>
   );
 };
