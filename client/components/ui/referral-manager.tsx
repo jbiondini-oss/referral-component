@@ -229,9 +229,9 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
                 {completedReferrals.map((referral) => (
                   <div
                     key={referral.id}
-                    className="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm"
+                    className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm h-fit"
                   >
-                    <div className="mb-3">
+                    <div className="mb-4">
                       {/* Simplified completed referral header */}
                     </div>
                     <ReferralTracker referralData={referral} />
