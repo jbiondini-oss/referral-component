@@ -82,7 +82,7 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
   const [activeReferrals, setActiveReferrals] = useState<ReferralData[]>([]);
   const [completedReferrals, setCompletedReferrals] = useState<ReferralData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showCompleted, setShowCompleted] = useState(false);
+  const [showCompleted, setShowCompleted] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // Load referrals data
