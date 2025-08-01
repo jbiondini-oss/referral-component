@@ -186,7 +186,8 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
             {activeReferrals.map((referral) => (
               <div
                 key={referral.id}
-                className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow h-fit"
+                className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow h-fit"
+                style={{ padding: '16px' }}
               >
                 <div className="mb-4">
                   {/* Simplified card header - removed ID, date, and promo code */}
@@ -229,7 +230,8 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
                 {completedReferrals.map((referral) => (
                   <div
                     key={referral.id}
-                    className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow h-fit"
+                    className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow h-fit"
+                    style={{ padding: '16px' }}
                   >
                     <div className="mb-4">
                       {/* Simplified completed referral header */}
