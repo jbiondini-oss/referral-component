@@ -7,13 +7,17 @@ export const generateDemoReferrals = (): ReferralData[] => {
     { firstName: "Alex", lastName: "Thompson", email: "alex.thompson@email.com" },
     { firstName: "Emma", lastName: "Wilson", email: "emma.wilson@email.com" },
     { firstName: "David", lastName: "Brown", email: "david.brown@email.com" },
+    { firstName: "Lisa", lastName: "Garcia", email: "lisa.garcia@email.com" },
+    { firstName: "Michael", lastName: "Davis", email: "michael.davis@email.com" },
   ];
 
   return mockUsers.map((user, index) => {
-    const transferCount = Math.floor(Math.random() * 8) + 1; // 1-8 transfers
+    // First 5 users have active referrals (1-8 transfers)
+    // Last 2 users have completed referrals (12 transfers)
+    const transferCount = index >= 5 ? 12 : Math.floor(Math.random() * 8) + 1;
     const baseDate = new Date('2024-01-01');
     const createdAt = new Date(baseDate.getTime() + index * 7 * 24 * 60 * 60 * 1000);
-    
+
     const transfers = Array.from({ length: transferCount }, (_, i) => ({
       id: `transfer-${index}-${i}`,
       amount: Math.floor(Math.random() * 500) + 50,
@@ -36,7 +40,7 @@ export const generateDemoReferrals = (): ReferralData[] => {
       promoCode: `${user.firstName.toUpperCase()}${new Date().getFullYear()}`,
       transferCount,
       totalEarnings: transferCount * 3,
-      status: 'active' as const,
+      status: transferCount >= 12 ? 'completed' as const : 'active' as const,
       createdAt: createdAt.toISOString(),
       updatedAt: new Date().toISOString(),
       transfers,
