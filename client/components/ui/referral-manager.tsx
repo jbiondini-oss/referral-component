@@ -89,13 +89,17 @@ export const ReferralManager: React.FC<ReferralManagerProps> = ({
   const loadReferrals = useCallback(async () => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
-      const [active, completed] = await Promise.all([
-        ReferralService.getActiveReferrals(referrerId),
-        ReferralService.getCompletedReferrals(referrerId),
-      ]);
-      
+      // For demo purposes, use generated data
+      // In production, this would call the actual API
+      const demoData = generateDemoReferrals();
+      const active = demoData.filter(r => r.transferCount < 12);
+      const completed = demoData.filter(r => r.transferCount >= 12);
+
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
       setActiveReferrals(active);
       setCompletedReferrals(completed);
     } catch (err) {
