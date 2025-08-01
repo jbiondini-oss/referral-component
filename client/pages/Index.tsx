@@ -86,17 +86,16 @@ export default function Index() {
   );
 }
 
-function getStateDescription(stage: ReferralState['stage'], transferCount?: number): string {
-  switch (stage) {
-    case 'joined':
-      return 'Referral has joined';
-    case 'first_transfer':
-      return 'Referral has sent their first money transfer';
-    case 'second_transfer':
-      return 'Referral has sent their 2nd money transfer';
-    case 'multiple_transfers':
-      return `Referral has sent their ${transferCount}th money transfer`;
-    default:
-      return 'Unknown state';
+function getStateDescription(transferCount: number): string {
+  if (transferCount === 0) {
+    return 'Referral has joined';
+  } else if (transferCount === 1) {
+    return 'Referral has sent their 1st money transfer';
+  } else if (transferCount === 2) {
+    return 'Referral has sent their 2nd money transfer';
+  } else if (transferCount === 3) {
+    return 'Referral has sent their 3rd money transfer';
+  } else {
+    return `Referral has sent their ${transferCount}th money transfer`;
   }
 }
