@@ -13,7 +13,18 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        gerbera: ['Gerbera', '-apple-system', 'Roboto', 'Helvetica', 'sans-serif'],
+      },
       colors: {
+        purple: {
+          primary: '#7633FF',
+        },
+        gray: {
+          dark: '#141414',
+          medium: '#77767A',
+          light: '#9F9DA3',
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
