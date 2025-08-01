@@ -43,7 +43,7 @@ export default function Index() {
               <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
                 <div className="mb-4">
                   <h3 className="text-lg font-semibold text-gray-dark mb-2">
-                    State {index + 1}: {getStateDescription(referral.stage, referral.transferCount)}
+                    State {index + 1}: {getStateDescription(referral.transferCount)}
                   </h3>
                 </div>
                 <ReferralTracker referral={referral} />
