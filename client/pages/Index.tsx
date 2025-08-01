@@ -1,87 +1,69 @@
 import React from "react";
-import {
-  ReferralTracker,
-  ReferralState,
-} from "@/components/ui/referral-tracker";
-
-// Generate all 13 states (joined + 12 transfers)
-const referralStates: ReferralState[] = Array.from({ length: 13 }, (_, i) => ({
-  userId: "user_mark_001", // Database ID for linking
-  name: "Mark A.", // Removed "referral", just name + initial
-  amount: i * 3, // Each transfer = 3 USD
-  transferCount: i, // 0 = joined, 1-12 = completed transfers
-}));
+import { ReferralManager } from "@/components/ui/referral-manager";
 
 export default function Index() {
+  // In production, this would come from authenticated user context
+  const currentReferrerId = "550e8400-e29b-41d4-a716-446655440000";
+
   return (
     <div className="min-h-screen bg-white px-4 py-8 md:px-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-dark mb-4">
-            Referral Tracking System
+            Paysend Referral Dashboard
           </h1>
           <p className="text-lg text-gray-medium">
-            Track your referrals' progress through different milestones
+            Manage your referrals and track earnings in real-time
           </p>
         </div>
 
-        <div className="space-y-8">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {referralStates.map((referral, index) => (
-              <div
-                key={referral.userId + index}
-                className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm"
-              >
-                <div className="mb-3">
-                  <h3 className="text-base font-semibold text-gray-dark mb-1">
-                    State {index + 1}
-                  </h3>
-                  <p className="text-sm text-gray-medium">
-                    {getStateDescription(referral.transferCount)}
-                  </p>
-                </div>
-                <ReferralTracker referral={referral} />
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Production-ready referral management */}
+        <ReferralManager referrerId={currentReferrerId} />
 
         <div className="mt-16 text-center">
           <div className="bg-gray-50 rounded-lg p-8">
             <h2 className="text-2xl font-bold text-gray-dark mb-4">
-              How It Works
+              How Paysend Referrals Work
             </h2>
             <div className="grid gap-6 md:grid-cols-4 text-sm">
               <div className="text-center">
-                <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2"></div>
-                <h4 className="font-semibold text-gray-dark mb-1">Joined</h4>
-                <p className="text-gray-medium">Referral signs up</p>
-              </div>
-              <div className="text-center">
-                <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2"></div>
-                <h4 className="font-semibold text-gray-dark mb-1">
-                  1st Transfer
-                </h4>
+                <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">
+                  1
+                </div>
+                <h4 className="font-semibold text-gray-dark mb-1">Share Code</h4>
                 <p className="text-gray-medium">
-                  First money transfer completed
+                  Share your unique promo code with friends
                 </p>
               </div>
               <div className="text-center">
-                <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2"></div>
-                <h4 className="font-semibold text-gray-dark mb-1">
-                  2nd Transfer
-                </h4>
+                <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">
+                  2
+                </div>
+                <h4 className="font-semibold text-gray-dark mb-1">Friend Joins</h4>
                 <p className="text-gray-medium">
-                  Second transfer milestone reached
+                  They register using your code
                 </p>
               </div>
               <div className="text-center">
-                <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2"></div>
+                <div className="w-8 h-8 bg-purple-primary rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">
+                  3
+                </div>
                 <h4 className="font-semibold text-gray-dark mb-1">
-                  Multiple Transfers
+                  Transfers Made
                 </h4>
                 <p className="text-gray-medium">
-                  3rd+ transfers continue earning
+                  Earn $3 USD for each transfer (up to 12)
+                </p>
+              </div>
+              <div className="text-center">
+                <div className="w-8 h-8 bg-green-600 rounded-full mx-auto mb-2 flex items-center justify-center text-white font-bold">
+                  ✓
+                </div>
+                <h4 className="font-semibold text-gray-dark mb-1">
+                  Maximum Earned
+                </h4>
+                <p className="text-gray-medium">
+                  $36 USD total per completed referral
                 </p>
               </div>
             </div>
@@ -90,18 +72,4 @@ export default function Index() {
       </div>
     </div>
   );
-}
-
-function getStateDescription(transferCount: number): string {
-  if (transferCount === 0) {
-    return "Referral has joined";
-  } else if (transferCount === 1) {
-    return "Referral has sent their 1st money transfer";
-  } else if (transferCount === 2) {
-    return "Referral has sent their 2nd money transfer";
-  } else if (transferCount === 3) {
-    return "Referral has sent their 3rd money transfer";
-  } else {
-    return `Referral has sent their ${transferCount}th money transfer`;
-  }
 }
