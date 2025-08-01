@@ -2,7 +2,8 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 export interface ReferralState {
-  name: string;
+  userId: string; // Database ID for linking
+  name: string; // Format: "FirstName L." (e.g., "Mark A.")
   amount: number;
   transferCount: number; // 0 = joined only, 1-12 = number of transfers completed
 }
