@@ -93,7 +93,7 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({ referral, clas
       </div>
 
       {/* Labels */}
-      <div className="w-full h-10 relative">
+      <div className="w-full h-5 relative">
         <div className={cn(
           "font-gerbera text-sm font-normal leading-5 absolute left-0 top-0 w-[43px] h-5",
           "text-gray-dark" // Joined is always active
@@ -101,8 +101,8 @@ export const ReferralTracker: React.FC<ReferralTrackerProps> = ({ referral, clas
           Joined
         </div>
         <div className={cn(
-          "w-[76px] text-right font-gerbera text-sm font-normal leading-5 absolute right-0 top-0 h-10",
-          progress > 0 ? "text-gray-dark" : "text-gray-medium"
+          "text-right font-gerbera text-sm font-normal leading-5 absolute right-0 top-0 h-5 whitespace-nowrap",
+          referral.transferCount > 0 ? "text-gray-dark" : "text-gray-medium"
         )}>
           {getTransferLabel()}
         </div>
